@@ -47,6 +47,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private var primaryTextColorRes: Int = -1
   private var secondaryTextColorRes: Int = -1
   private var addresses: List<Address>? = null
+  private var mapType:MapType?=null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -99,6 +100,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     fabColorRes = intent.getIntExtra(Constants.FAB_COLOR_RES_INTENT, -1)
     primaryTextColorRes = intent.getIntExtra(Constants.PRIMARY_TEXT_COLOR_RES_INTENT, -1)
     secondaryTextColorRes = intent.getIntExtra(Constants.SECONDARY_TEXT_COLOR_RES_INTENT, -1)
+    mapType=intent.getSerializableExtra(Constants.MAP_TYPE) as MapType
   }
 
   private fun setIntentCustomization() {
@@ -122,7 +124,15 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
 
   override fun onMapReady(googleMap: GoogleMap) {
     map = googleMap
-
+    mapType?.let {
+      map.mapType=when(it){
+        MapType.None-> 0
+        MapType.Normal->1
+        MapType.Satellite->2
+        MapType.Terrain->3
+        MapType.Hybrid->4
+      }
+    }
     map.setOnCameraMoveStartedListener {
       if (markerImage.translationY == 0f) {
         markerImage.animate()
@@ -142,6 +152,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
           .setInterpolator(OvershootInterpolator())
           .setDuration(250)
           .start()
+
 
       bottomSheet.showLoadingBottomDetails()
       val latLng = map.cameraPosition.target

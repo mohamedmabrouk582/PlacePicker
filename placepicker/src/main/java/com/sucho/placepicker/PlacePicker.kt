@@ -21,6 +21,7 @@ class PlacePicker {
     private var fabBackgroundColorRes: Int = -1
     private var primaryTextColorRes: Int = -1
     private var secondaryTextColorRes: Int = -1
+    private var mapType:MapType=MapType.Normal
 
     fun showLatLong(showLatLong: Boolean) = apply { this.showLatLong = showLatLong }
 
@@ -36,6 +37,8 @@ class PlacePicker {
         this.longitude = longitude
       }
     }
+
+    fun setMapType(mapType:MapType) = apply { this.mapType=mapType }
 
     fun setMapZoom(zoom: Float) = apply { this.zoom = zoom }
 
@@ -56,6 +59,7 @@ class PlacePicker {
     fun build(activity: Activity): Intent {
       this.activity = activity
       val intent = Intent(activity, PlacePickerActivity::class.java)
+      intent.putExtra(Constants.MAP_TYPE,mapType)
       intent.putExtra(Constants.SHOW_LAT_LONG_INTENT, showLatLong)
       intent.putExtra(Constants.INITIAL_LATITUDE_INTENT, latitude)
       intent.putExtra(Constants.INITIAL_LONGITUDE_INTENT, longitude)

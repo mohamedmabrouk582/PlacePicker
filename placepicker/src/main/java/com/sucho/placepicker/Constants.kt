@@ -1,6 +1,7 @@
 package com.sucho.placepicker
 
 object Constants {
+  const val MAP_TYPE: String="MAP_TYPE"
   const val SHOW_LAT_LONG_INTENT = "SHOW_LAT_LONG_INTENT"
   const val INITIAL_LATITUDE_INTENT = "INITIAL_LATITUDE_INTENT"
   const val INITIAL_LONGITUDE_INTENT = "INITIAL_LONGITUDE_INTENT"

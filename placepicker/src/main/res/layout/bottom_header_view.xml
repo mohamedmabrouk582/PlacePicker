@@ -16,18 +16,18 @@
       android:layout_marginBottom="18dp"
       >
     <TextView
-        android:id="@+id/text_view_place_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="18dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="20sp"
-        tools:text="Normal House"
-        />
+            android:id="@+id/text_view_place_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            tools:text="Normal House"
+            android:layout_marginRight="30dp" android:layout_marginLeft="16dp"/>
 
     <TextView
         android:id="@+id/text_view_place_address"
