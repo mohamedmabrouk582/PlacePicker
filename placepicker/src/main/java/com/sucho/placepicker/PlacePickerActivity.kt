@@ -124,6 +124,12 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
 
   override fun onMapReady(googleMap: GoogleMap) {
     map = googleMap
+    map.let {
+      it.isBuildingsEnabled=true
+      it.isIndoorEnabled=true
+      it.isTrafficEnabled=true
+      it.uiSettings.isMapToolbarEnabled=true
+    }
     mapType?.let {
       map.mapType=when(it){
         MapType.None-> 0
