@@ -22,6 +22,8 @@ class PlacePicker {
     private var primaryTextColorRes: Int = -1
     private var secondaryTextColorRes: Int = -1
     private var mapType:MapType=MapType.Normal
+    private var isIndoorEnabled:Boolean=false
+    private var isTrafficEnabled:Boolean=false
 
     fun showLatLong(showLatLong: Boolean) = apply { this.showLatLong = showLatLong }
 
@@ -37,6 +39,10 @@ class PlacePicker {
         this.longitude = longitude
       }
     }
+
+    fun setIndoorEnabled(isIndoorEnabled:Boolean) = apply { this.isIndoorEnabled=isIndoorEnabled }
+
+    fun setTrafficEnabled(isTrafficEnabled:Boolean) = apply { this.isTrafficEnabled=isTrafficEnabled }
 
     fun setMapType(mapType:MapType) = apply { this.mapType=mapType }
 

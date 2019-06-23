@@ -17,12 +17,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         findViewById<Button>(R.id.open_place_picker_button).setOnClickListener {
             val intent = PlacePicker.IntentBuilder()
-                .setLatLong(40.748672, -73.985628)
+                .setLatLong(30.0517014, 31.2053958)
                 .showLatLong(true)
-                .setMapType(MapType.Satellite)
                 .build(this)
             startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST)
         }
