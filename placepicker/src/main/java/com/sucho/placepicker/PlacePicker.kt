@@ -76,6 +76,8 @@ class PlacePicker {
       intent.putExtra(Constants.FAB_COLOR_RES_INTENT, fabBackgroundColorRes)
       intent.putExtra(Constants.PRIMARY_TEXT_COLOR_RES_INTENT, primaryTextColorRes)
       intent.putExtra(Constants.SECONDARY_TEXT_COLOR_RES_INTENT, secondaryTextColorRes)
+      intent.putExtra(Constants.IS_INDOOR_ENABLE, isIndoorEnabled)
+      intent.putExtra(Constants.IS_TRAFFIC_ENABLE, isTrafficEnabled)
       return intent
     }
   }

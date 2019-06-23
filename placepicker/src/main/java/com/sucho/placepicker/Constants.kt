@@ -19,4 +19,6 @@ object Constants {
   const val PLACE_PICKER_REQUEST = 100
   const val PLACE_PICKER_REQUEST_code = 101
   const val ADDRESS_INTENT = "ADDRESS_INTENT"
+  const val IS_INDOOR_ENABLE="IS_INDOOR_ENABLE"
+  const val IS_TRAFFIC_ENABLE="IS_TRAFFIC_ENABLE"
 }

@@ -63,6 +63,8 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
   private var secondaryTextColorRes: Int = -1
   private var addresses: List<Address>? = null
   private var mapType:MapType?=null
+  private var isIndoorEnabled:Boolean=false
+  private var isTrafficEnabled:Boolean=false
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -120,6 +122,8 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
     fabColorRes = intent.getIntExtra(Constants.FAB_COLOR_RES_INTENT, -1)
     primaryTextColorRes = intent.getIntExtra(Constants.PRIMARY_TEXT_COLOR_RES_INTENT, -1)
     secondaryTextColorRes = intent.getIntExtra(Constants.SECONDARY_TEXT_COLOR_RES_INTENT, -1)
+    isIndoorEnabled=intent.getBooleanExtra(Constants.IS_INDOOR_ENABLE,false)
+    isTrafficEnabled=intent.getBooleanExtra(Constants.IS_TRAFFIC_ENABLE,false)
     mapType=intent.getSerializableExtra(Constants.MAP_TYPE) as MapType
   }
 
@@ -147,8 +151,8 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
     checkPermission()
     map.let {
       it.isBuildingsEnabled=true
-      it.isIndoorEnabled=true
-      it.isTrafficEnabled=true
+      it.isIndoorEnabled=isIndoorEnabled
+      it.isTrafficEnabled=isTrafficEnabled
       it.uiSettings.isMapToolbarEnabled=true
     }
     mapType?.let {
