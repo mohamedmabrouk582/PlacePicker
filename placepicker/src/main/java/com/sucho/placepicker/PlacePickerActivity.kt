@@ -1,5 +1,7 @@
 package com.sucho.placepicker
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.location.Address
@@ -19,9 +21,22 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
 import java.util.Locale
 
-class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
+class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermissions.PermissionCallbacks {
+  override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+    EasyPermissions.requestPermissions(this,"",Constants.PLACE_PICKER_REQUEST_code,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)
+
+  }
+
+  @SuppressLint("MissingPermission")
+  override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+    map.let {
+      it.isMyLocationEnabled=true
+    }
+  }
 
   companion object {
     private const val TAG = "PlacePickerActivity"
@@ -88,6 +103,11 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     setIntentCustomization()
   }
 
+  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this)
+  }
+
   private fun getIntentData() {
     latitude = intent.getDoubleExtra(Constants.INITIAL_LATITUDE_INTENT, Constants.DEFAULT_LATITUDE)
     longitude = intent.getDoubleExtra(Constants.INITIAL_LONGITUDE_INTENT, Constants.DEFAULT_LONGITUDE)
@@ -124,6 +144,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
 
   override fun onMapReady(googleMap: GoogleMap) {
     map = googleMap
+    checkPermission()
     map.let {
       it.isBuildingsEnabled=true
       it.isIndoorEnabled=true
@@ -170,6 +191,18 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
       }
     }
     map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), zoom))
+  }
+
+  @SuppressLint("MissingPermission")
+  @AfterPermissionGranted(Constants.PLACE_PICKER_REQUEST_code)
+  fun checkPermission(){
+    if (EasyPermissions.hasPermissions(this,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)){
+      map.let {
+        it.isMyLocationEnabled=true
+      }
+    }else
+      EasyPermissions.requestPermissions(this,"",Constants.PLACE_PICKER_REQUEST_code,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)
+
   }
 
   private fun getAddressForLocation() {

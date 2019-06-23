@@ -17,5 +17,6 @@ object Constants {
   const val DEFAULT_LONGITUDE = -73.985628
   const val DEFAULT_ZOOM = 14.0F
   const val PLACE_PICKER_REQUEST = 100
+  const val PLACE_PICKER_REQUEST_code = 101
   const val ADDRESS_INTENT = "ADDRESS_INTENT"
 }
