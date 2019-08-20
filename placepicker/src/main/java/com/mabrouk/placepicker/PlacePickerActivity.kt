@@ -197,21 +197,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
     }
 
     map.setOnCameraIdleListener {
-      markerImage.animate()
-          .translationY(0f)
-          .setInterpolator(OvershootInterpolator())
-          .setDuration(250)
-          .start()
-
-
-      bottomSheet.showLoadingBottomDetails()
-      val latLng = map.cameraPosition.target
-      latitude = latLng.latitude
-      longitude = latLng.longitude
-      AsyncTask.execute {
-        getAddressForLocation()
-        runOnUiThread { bottomSheet.setPlaceDetails(latitude, longitude, shortAddress, fullAddress) }
-      }
+      updatedSheet()
     }
     map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), zoom))
   }
@@ -286,5 +272,23 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
        })
 
 
+  }
+
+  fun updatedSheet(){
+    markerImage.animate()
+      .translationY(0f)
+      .setInterpolator(OvershootInterpolator())
+      .setDuration(250)
+      .start()
+
+
+    bottomSheet.showLoadingBottomDetails()
+    val latLng = map.cameraPosition.target
+    latitude = latLng.latitude
+    longitude = latLng.longitude
+    AsyncTask.execute {
+      getAddressForLocation()
+      runOnUiThread { bottomSheet.setPlaceDetails(latitude, longitude, shortAddress, fullAddress) }
+    }
   }
 }

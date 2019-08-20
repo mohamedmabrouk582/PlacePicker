@@ -26,7 +26,7 @@ class PlacePicker {
     private var isTrafficEnabled:Boolean=false
     private var hasPlaceAutocomplete:Boolean=false
     private var filterCountry:String="EG"
-    var placeSelectionListener : PlacePickerListener?=null
+    var placePickerListener : PlacePickerListener?=null
 
     fun showLatLong(showLatLong: Boolean) = apply { this.showLatLong = showLatLong }
 
@@ -43,7 +43,7 @@ class PlacePicker {
       }
     }
 
-    fun setPlaceSelectionListener(placeSelectionListener:PlacePickerListener) = apply { this.placeSelectionListener=placeSelectionListener }
+        fun setPlacePickerListenerr(placePickerListener:PlacePickerListener) = apply { this.placePickerListener=placePickerListener }
 
     fun setFilterCountry(filterCountry:String) = apply { this.filterCountry=filterCountry }
 
@@ -74,7 +74,7 @@ class PlacePicker {
     fun build(activity: Activity): Intent {
       this.activity = activity
       val intent = Intent(activity, PlacePickerActivity::class.java)
-      Constants.placePickerListener=placeSelectionListener
+      Constants.placePickerListener=placePickerListener
       intent.putExtra(Constants.MAP_TYPE,mapType)
       intent.putExtra(Constants.SHOW_LAT_LONG_INTENT, showLatLong)
       intent.putExtra(Constants.INITIAL_LATITUDE_INTENT, latitude)
