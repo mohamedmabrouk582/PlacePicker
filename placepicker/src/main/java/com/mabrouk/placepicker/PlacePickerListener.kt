@@ -10,7 +10,7 @@ import java.io.Serializable
 * PlacePicker
 */
 
-interface PlacePickerListener : Serializable {
+public  interface PlacePickerListener : Serializable {
      fun onPlaceSelected(place: Place?)
      fun onError(var1: Status?)
 }

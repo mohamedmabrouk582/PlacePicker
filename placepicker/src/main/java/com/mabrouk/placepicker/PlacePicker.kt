@@ -26,7 +26,7 @@ class PlacePicker {
     private var isTrafficEnabled:Boolean=false
     private var hasPlaceAutocomplete:Boolean=false
     private var filterCountry:String="EG"
-    lateinit var placeSelectionListener : PlacePickerListener
+    var placeSelectionListener : PlacePickerListener?=null
 
     fun showLatLong(showLatLong: Boolean) = apply { this.showLatLong = showLatLong }
 
