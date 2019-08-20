@@ -1,4 +1,4 @@
-package com.sucho.placepickerexample
+package com.mabrouk.placepickerexample
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4

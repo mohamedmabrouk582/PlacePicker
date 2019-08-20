@@ -1,4 +1,4 @@
-package com.sucho.placepickerexample
+package com.mabrouk.placepickerexample
 
 import org.junit.Test
 

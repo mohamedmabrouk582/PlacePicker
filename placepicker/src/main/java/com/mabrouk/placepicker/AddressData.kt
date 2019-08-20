@@ -1,4 +1,4 @@
-package com.sucho.placepicker
+package com.mabrouk.placepicker
 
 import android.location.Address
 import android.os.Parcelable

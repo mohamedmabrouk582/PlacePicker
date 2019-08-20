@@ -1,4 +1,4 @@
-package com.sucho.placepicker
+package com.mabrouk.placepicker
 
 import java.io.Serializable
 

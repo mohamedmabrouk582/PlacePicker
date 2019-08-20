@@ -1,7 +1,10 @@
-package com.sucho.placepicker
+package com.mabrouk.placepicker
 
 object Constants {
-  const val MAP_TYPE: String="MAP_TYPE"
+  const val PLACE_LISTENER: String="PLACE_LISTENER"
+  const val HAS_PlaceAutocomplete: String="HAS_PlaceAutocomplete"
+  const val FILTER_COUNTRY:String="FILTER_COUNTRY"
+    const val MAP_TYPE: String="MAP_TYPE"
   const val SHOW_LAT_LONG_INTENT = "SHOW_LAT_LONG_INTENT"
   const val INITIAL_LATITUDE_INTENT = "INITIAL_LATITUDE_INTENT"
   const val INITIAL_LONGITUDE_INTENT = "INITIAL_LONGITUDE_INTENT"
@@ -21,4 +24,5 @@ object Constants {
   const val ADDRESS_INTENT = "ADDRESS_INTENT"
   const val IS_INDOOR_ENABLE="IS_INDOOR_ENABLE"
   const val IS_TRAFFIC_ENABLE="IS_TRAFFIC_ENABLE"
+  var placePickerListener:PlacePickerListener?=null
 }

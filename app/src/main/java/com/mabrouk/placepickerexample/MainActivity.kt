@@ -1,4 +1,4 @@
-package com.sucho.placepickerexample
+package com.mabrouk.placepickerexample
 
 import android.app.Activity
 import android.content.Intent
@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.sucho.placepicker.AddressData
-import com.sucho.placepicker.Constants
-import com.sucho.placepicker.MapType
-import com.sucho.placepicker.PlacePicker
+import com.google.android.gms.common.api.Status
+import com.mabrouk.placepicker.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +20,17 @@ class MainActivity : AppCompatActivity() {
             val intent = PlacePicker.IntentBuilder()
                 .setLatLong(30.0517014, 31.2053958)
                 .showLatLong(true)
+                .setPlaceAutocomplete(true)
+                .setFilterCountry("EG")
+                .setPlaceSelectionListener(object : PlacePickerListener{
+                    override fun onPlaceSelected(p0: com.google.android.gms.location.places.Place?) {
+                      Toast.makeText(this@MainActivity,"${p0?.address}",Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onError(p0: Status?) {
+                    }
+
+                })
                 .build(this)
             startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST)
         }

@@ -6,8 +6,18 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     >
-
-
+<FrameLayout
+        android:id="@+id/fr"
+        app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+    <fragment
+            android:id="@+id/place_autocomplete_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            />
+</FrameLayout>
 
   <ImageView
       android:id="@+id/marker_image_view"
@@ -35,20 +45,19 @@
       app:layout_constraintVertical_bias="0.0"
       app:srcCompat="@drawable/marker_shadow"
       />
-  <fragment
-      xmlns:tools="http://schemas.android.com/tools"
-      android:id="@+id/map"
-      android:name="com.google.android.gms.maps.SupportMapFragment"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      tools:context=".PlacePickerActivity"
-      />
+    <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:context=".PlacePickerActivity"
+            app:layout_constraintTop_toBottomOf="@+id/fr"
+            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="0.0"/>
 
-    <com.sucho.placepicker.CurrentPlaceSelectionBottomSheet
+    <com.mabrouk.placepicker.CurrentPlaceSelectionBottomSheet
             android:id="@+id/bottom_sheet"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -57,7 +66,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="1.0">
-    </com.sucho.placepicker.CurrentPlaceSelectionBottomSheet>
+    </com.mabrouk.placepicker.CurrentPlaceSelectionBottomSheet>
         <ImageView
             android:visibility="gone"
             android:layout_width="40dp"

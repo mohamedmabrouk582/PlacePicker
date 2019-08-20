@@ -1,4 +1,4 @@
-package com.sucho.placepicker
+package com.mabrouk.placepicker
 
 import android.app.Activity
 import android.content.Intent
@@ -24,6 +24,9 @@ class PlacePicker {
     private var mapType:MapType=MapType.Normal
     private var isIndoorEnabled:Boolean=false
     private var isTrafficEnabled:Boolean=false
+    private var hasPlaceAutocomplete:Boolean=false
+    private var filterCountry:String="EG"
+    lateinit var placeSelectionListener : PlacePickerListener
 
     fun showLatLong(showLatLong: Boolean) = apply { this.showLatLong = showLatLong }
 
@@ -39,6 +42,12 @@ class PlacePicker {
         this.longitude = longitude
       }
     }
+
+    fun setPlaceSelectionListener(placeSelectionListener:PlacePickerListener) = apply { this.placeSelectionListener=placeSelectionListener }
+
+    fun setFilterCountry(filterCountry:String) = apply { this.filterCountry=filterCountry }
+
+    fun setPlaceAutocomplete(hasPlaceAutocomplete:Boolean) = apply { this.hasPlaceAutocomplete=hasPlaceAutocomplete }
 
     fun setIndoorEnabled(isIndoorEnabled:Boolean) = apply { this.isIndoorEnabled=isIndoorEnabled }
 
@@ -65,6 +74,7 @@ class PlacePicker {
     fun build(activity: Activity): Intent {
       this.activity = activity
       val intent = Intent(activity, PlacePickerActivity::class.java)
+      Constants.placePickerListener=placeSelectionListener
       intent.putExtra(Constants.MAP_TYPE,mapType)
       intent.putExtra(Constants.SHOW_LAT_LONG_INTENT, showLatLong)
       intent.putExtra(Constants.INITIAL_LATITUDE_INTENT, latitude)
@@ -78,6 +88,9 @@ class PlacePicker {
       intent.putExtra(Constants.SECONDARY_TEXT_COLOR_RES_INTENT, secondaryTextColorRes)
       intent.putExtra(Constants.IS_INDOOR_ENABLE, isIndoorEnabled)
       intent.putExtra(Constants.IS_TRAFFIC_ENABLE, isTrafficEnabled)
+      intent.putExtra(Constants.HAS_PlaceAutocomplete,hasPlaceAutocomplete)
+      intent.putExtra(Constants.FILTER_COUNTRY,filterCountry)
+     // intent.putExtra(Constants.PLACE_LISTENER,placeSelectionListener)
       return intent
     }
   }

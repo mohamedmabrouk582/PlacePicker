@@ -1,4 +1,4 @@
-package com.sucho.placepicker
+package com.mabrouk.placepicker
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -15,12 +15,18 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.google.android.gms.common.api.Status
+import com.google.android.gms.location.places.AutocompleteFilter
+import com.google.android.gms.location.places.Place
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
+import com.google.android.gms.location.places.ui.PlaceSelectionListener
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.activity_place_picker.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import java.util.Locale
@@ -65,6 +71,9 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
   private var mapType:MapType?=null
   private var isIndoorEnabled:Boolean=false
   private var isTrafficEnabled:Boolean=false
+  private var hasPlaceAutocomplete:Boolean=false
+  private var filterCountry:String="EG"
+  private var placeSelectionListener : PlacePickerListener? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -74,6 +83,11 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
     val mapFragment = supportFragmentManager
         .findFragmentById(R.id.map) as SupportMapFragment
     mapFragment.getMapAsync(this)
+    if (hasPlaceAutocomplete){
+        setupPlaceAutocompleteFragment()
+    }else{
+        fr.visibility= View.GONE
+    }
 
     bottomSheet = findViewById(R.id.bottom_sheet)
     bottomSheet.showCoordinatesTextView(showLatLong)
@@ -125,6 +139,11 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
     isIndoorEnabled=intent.getBooleanExtra(Constants.IS_INDOOR_ENABLE,false)
     isTrafficEnabled=intent.getBooleanExtra(Constants.IS_TRAFFIC_ENABLE,false)
     mapType=intent.getSerializableExtra(Constants.MAP_TYPE) as MapType
+    hasPlaceAutocomplete=intent.getBooleanExtra(Constants.HAS_PlaceAutocomplete,false)
+    filterCountry=intent.getStringExtra(Constants.FILTER_COUNTRY)
+    //placeSelectionListener=intent.getSerializableExtra(Constants.PLACE_LISTENER) as PlacePickerListener?
+    placeSelectionListener=Constants.placePickerListener
+
   }
 
   private fun setIntentCustomization() {
@@ -244,5 +263,28 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
   ): String {
     val s = address.split(",")
     return if (s.size >= 3) s[1] + "," + s[2] else if (s.size == 2) s[1] else s[0]
+  }
+
+  fun setupPlaceAutocompleteFragment(){
+    val autocompleteFragment = fragmentManager.findFragmentById(R.id.place_autocomplete_fragment) as PlaceAutocompleteFragment
+    val typeFilter: AutocompleteFilter = AutocompleteFilter.Builder().setCountry(filterCountry).build()
+      autocompleteFragment.setHint("search Location")
+      autocompleteFragment.setFilter(typeFilter)
+       autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener{
+         override fun onPlaceSelected(p0: Place?) {
+           placeSelectionListener?.onPlaceSelected(p0)
+           p0?.apply {
+             map.moveCamera(CameraUpdateFactory.newLatLngZoom(this@apply.latLng, zoom))
+           }
+         }
+
+         override fun onError(p0: Status?) {
+           placeSelectionListener?.onError(p0)
+           Log.d("efrrrrr","$p0")
+         }
+
+       })
+
+
   }
 }
