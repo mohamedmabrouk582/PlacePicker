@@ -267,7 +267,14 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
            placeSelectionListener?.onPlaceSelected(p0)
            p0?.apply {
              map.moveCamera(CameraUpdateFactory.newLatLngZoom(p0.latLng, zoom))
-             callBack.onCameraIdle()
+             bottomSheet.showLoadingBottomDetails()
+             val latLng = p0.latLng
+             latitude = latLng.latitude
+             longitude = latLng.longitude
+             AsyncTask.execute {
+               getAddressForLocation()
+               runOnUiThread { bottomSheet.setPlaceDetails(latitude, longitude, shortAddress, fullAddress) }
+             }
            }
          }
 
