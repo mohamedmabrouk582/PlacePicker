@@ -24,5 +24,5 @@ object Constants {
   const val ADDRESS_INTENT = "ADDRESS_INTENT"
   const val IS_INDOOR_ENABLE="IS_INDOOR_ENABLE"
   const val IS_TRAFFIC_ENABLE="IS_TRAFFIC_ENABLE"
-  var placePickerListener:PlacePickerListener?=null
+  var placePickerListener: PlacePicker.PlacePickerListener?=null
 }
