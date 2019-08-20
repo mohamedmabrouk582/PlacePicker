@@ -262,8 +262,8 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
          override fun onPlaceSelected(p0: Place?) {
            placeSelectionListener?.onPlaceSelected(p0)
            p0?.apply {
-             updatedSheet()
              map.moveCamera(CameraUpdateFactory.newLatLngZoom(this@apply.latLng, zoom))
+             updatedSheet()
            }
          }
 
