@@ -73,7 +73,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
   private var isTrafficEnabled:Boolean=false
   private var hasPlaceAutocomplete:Boolean=false
   private var filterCountry:String?=null
-  private var placeSelectionListener : PlacePickerListener? = null
+  private var placeSelectionListener : PlacePicker.PlacePickerListener? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -262,6 +262,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
          override fun onPlaceSelected(p0: Place?) {
            placeSelectionListener?.onPlaceSelected(p0)
            p0?.apply {
+             updatedSheet()
              map.moveCamera(CameraUpdateFactory.newLatLngZoom(this@apply.latLng, zoom))
            }
          }

@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
                 .showLatLong(true)
                 .setPlaceAutocomplete(true)
                 .setFilterCountry("EG")
-                .setPlaceSelectionListener(object : PlacePickerListener{
+                .setPlacePickerListenerr(object : PlacePicker.PlacePickerListener {
                     override fun onPlaceSelected(p0: com.google.android.gms.location.places.Place?) {
                       Toast.makeText(this@MainActivity,"${p0?.address}",Toast.LENGTH_SHORT).show()
                     }

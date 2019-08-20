@@ -4,6 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import com.google.android.gms.common.api.Status
+import com.google.android.gms.location.places.Place
+import java.io.Serializable
 
 class PlacePicker {
 
@@ -43,7 +46,7 @@ class PlacePicker {
       }
     }
 
-        fun setPlacePickerListenerr(placePickerListener:PlacePickerListener) = apply { this.placePickerListener=placePickerListener }
+    fun setPlacePickerListenerr(placePickerListener:PlacePickerListener) = apply { this.placePickerListener=placePickerListener }
 
     fun setFilterCountry(filterCountry:String) = apply { this.filterCountry=filterCountry }
 
@@ -94,5 +97,10 @@ class PlacePicker {
       return intent
     }
   }
+
+     public  interface PlacePickerListener : Serializable {
+        fun onPlaceSelected(place: Place?)
+        fun onError(var1: Status?)
+    }
 
 }
