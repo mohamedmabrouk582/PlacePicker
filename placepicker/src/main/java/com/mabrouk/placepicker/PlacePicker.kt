@@ -25,7 +25,7 @@ class PlacePicker {
     private var isIndoorEnabled:Boolean=false
     private var isTrafficEnabled:Boolean=false
     private var hasPlaceAutocomplete:Boolean=false
-    private var filterCountry:String="EG"
+    private var filterCountry:String?=null
     var placePickerListener : PlacePickerListener?=null
 
     fun showLatLong(showLatLong: Boolean) = apply { this.showLatLong = showLatLong }

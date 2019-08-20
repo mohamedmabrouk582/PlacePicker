@@ -72,7 +72,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
   private var isIndoorEnabled:Boolean=false
   private var isTrafficEnabled:Boolean=false
   private var hasPlaceAutocomplete:Boolean=false
-  private var filterCountry:String="EG"
+  private var filterCountry:String?=null
   private var placeSelectionListener : PlacePickerListener? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -253,9 +253,11 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
 
   fun setupPlaceAutocompleteFragment(){
     val autocompleteFragment = fragmentManager.findFragmentById(R.id.place_autocomplete_fragment) as PlaceAutocompleteFragment
-    val typeFilter: AutocompleteFilter = AutocompleteFilter.Builder().setCountry(filterCountry).build()
-      autocompleteFragment.setHint("search Location")
+    filterCountry?.apply {
+      val typeFilter: AutocompleteFilter = AutocompleteFilter.Builder().setCountry(this).build()
       autocompleteFragment.setFilter(typeFilter)
+    }
+    autocompleteFragment.setHint("search Location")
        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener{
          override fun onPlaceSelected(p0: Place?) {
            placeSelectionListener?.onPlaceSelected(p0)
