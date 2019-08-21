@@ -74,7 +74,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
   private var hasPlaceAutocomplete:Boolean=false
   private var filterCountry:String?=null
   private var placeSelectionListener : PlacePicker.PlacePickerListener? = null
-  lateinit var callBack:GoogleMap.OnCameraIdleListener
+  lateinit var callBack:GoogleMap.OnCameraMoveStartedListener
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -184,8 +184,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
         MapType.Hybrid->4
       }
     }
-    callBack = GoogleMap.OnCameraIdleListener { updatedSheet() }
-    map.setOnCameraMoveStartedListener {
+    callBack = GoogleMap.OnCameraMoveStartedListener {
       if (markerImage.translationY == 0f) {
         markerImage.animate()
             .translationY(-75f)
@@ -198,11 +197,13 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
       }
     }
 
-    map.setOnCameraIdleListener(callBack)
 
-//    map.setOnCameraIdleListener {
-//      updatedSheet()
-//    }
+
+    map.setOnCameraMoveStartedListener(callBack)
+
+    map.setOnCameraIdleListener {
+      updatedSheet()
+    }
     map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), zoom))
   }
 
@@ -266,7 +267,6 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
          override fun onPlaceSelected(p0: Place?) {
            placeSelectionListener?.onPlaceSelected(p0)
            p0?.apply {
-             map.moveCamera(CameraUpdateFactory.newLatLngZoom(p0.latLng, zoom))
              bottomSheet.showLoadingBottomDetails()
              val latLng = p0.latLng
              latitude = latLng.latitude
@@ -275,6 +275,8 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
                getAddressForLocation()
                runOnUiThread { bottomSheet.setPlaceDetails(latitude, longitude, shortAddress, fullAddress) }
              }
+             callBack.onCameraMoveStarted(2)
+             map.moveCamera(CameraUpdateFactory.newLatLngZoom(p0.latLng, zoom))
            }
          }
 
