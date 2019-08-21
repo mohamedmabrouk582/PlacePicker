@@ -267,15 +267,14 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback , EasyPermis
          override fun onPlaceSelected(p0: Place?) {
            placeSelectionListener?.onPlaceSelected(p0)
            p0?.apply {
-             bottomSheet.showLoadingBottomDetails()
-             val latLng = p0.latLng
-             latitude = latLng.latitude
-             longitude = latLng.longitude
-             AsyncTask.execute {
-               getAddressForLocation()
-               runOnUiThread { bottomSheet.setPlaceDetails(latitude, longitude, shortAddress, fullAddress) }
+             markerImage.animate()
+               .translationY(-75f)
+               .setInterpolator(OvershootInterpolator())
+               .setDuration(250)
+               .start()
+             if (bottomSheet.isShowing) {
+               bottomSheet.dismissPlaceDetails()
              }
-             callBack.onCameraMoveStarted(2)
              map.moveCamera(CameraUpdateFactory.newLatLngZoom(p0.latLng, zoom))
            }
          }

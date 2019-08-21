@@ -19,7 +19,7 @@
             android:id="@+id/text_view_place_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="130dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
             android:ellipsize="end"
